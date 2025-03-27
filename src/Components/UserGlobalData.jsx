@@ -1,11 +1,24 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { getUserUncompletedTodos } from "../Utils/todosUtils";
+import { updateUserData } from "../Utils/usersUtils";
 import OtherData from "./OtherData";
 
 export default function UserGlobalData(props) {
   const [borderColor, setBorderColor] = useState("");
-  const [displayOtherData,setDisplayOtherData]=useState(false);
+  const [displayOtherData, setDisplayOtherData] = useState(false);
+  const [userUpdatedData, setUserUpdatedData] = useState({
+    name: props.user?.name || "",
+    email: props.user?.email || "",
+    street: props.user?.address.street || "",
+    city: props.user?.address.city || "",
+    zipCode: props.user?.address.zipCode || "",
+  });
+  const [userCurrentDetails, setUserCurrentDetails] = useState({
+    name: props.user?.name || "",
+    email: props.user?.email || "",
+  });
+
   useEffect(() => {
     const fetchUncompletedTodos = async () => {
       const resp = await getUserUncompletedTodos(props.user?.id);
@@ -15,18 +28,53 @@ export default function UserGlobalData(props) {
     fetchUncompletedTodos();
   }, []);
 
-  
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setUserUpdatedData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleUpdate = async () => {
+    const resp = await updateUserData(props.user?.id, userUpdatedData);
+    console.log(resp);
+    //console.log(userUpdatedData);
+    setUserCurrentDetails(userUpdatedData);
+    props.handleUpdateFilteredUsers(props.user?.id,resp);
+  };
+
   return (
     <div style={{ border: `3px solid ${borderColor}` }}>
       <label>ID:{props.user?.id}</label>
       <label>Name:</label>
-      <input type="text" placeholder={props.user?.name}></input>
+      <input
+        type="text"
+        name="name"
+        placeholder={userCurrentDetails.name}
+        onChange={handleChange}
+      ></input>
       <label>Email:</label>
-      <input type="text" placeholder={props.user?.email}></input>
-      <button onMouseOver={()=>setDisplayOtherData(true)} onClick={()=>setDisplayOtherData(false)}>Other Data</button>
-      {displayOtherData && <OtherData userAddress={props.user?.address}/>}
-      <button>Update</button>
-      <button>Delete</button>
+      <input
+        type="text"
+        name="email"
+        placeholder={userCurrentDetails.email}
+        onChange={handleChange}
+      ></input>
+      <button
+        onMouseOver={() => setDisplayOtherData(true)}
+        onClick={() => setDisplayOtherData(false)}
+      >
+        Other Data
+      </button>
+      {displayOtherData && (
+        <OtherData
+          userAddress={props.user?.address}
+          handleChange={handleChange}
+        />
+      )}
+      <button onClick={handleUpdate}>Update</button>
+      <button onClick={() => props.handleDelete(props.user?.id)}>Delete</button>
     </div>
   );
 }

@@ -7,6 +7,7 @@ import OtherData from "./OtherData";
 export default function UserGlobalData(props) {
   const [borderColor, setBorderColor] = useState("");
   const [displayOtherData, setDisplayOtherData] = useState(false);
+  const [backgroundColor,setBackgroundColor]=useState("white");
   const [userUpdatedData, setUserUpdatedData] = useState({
     name: props.user?.name || "",
     email: props.user?.email || "",
@@ -43,10 +44,16 @@ export default function UserGlobalData(props) {
     setUserCurrentDetails(userUpdatedData);
     props.handleUpdateFilteredUsers(props.user?.id,resp);
   };
+  
+  const handleIdClicked=()=>{
+     setBackgroundColor("orange");
+     props.handleUserTodos(props.user?.id);
+  }
 
   return (
-    <div style={{ border: `3px solid ${borderColor}` }}>
-      <label>ID:{props.user?.id}</label>
+    <div style={{ border: `3px solid ${borderColor}`, backgroundColor:backgroundColor}}>
+      <label onClick={handleIdClicked} style={{cursor:"pointer"}}>ID:{props.user?.id}</label>
+      <br/>
       <label>Name:</label>
       <input
         type="text"
@@ -54,6 +61,7 @@ export default function UserGlobalData(props) {
         placeholder={userCurrentDetails.name}
         onChange={handleChange}
       ></input>
+      <br/>
       <label>Email:</label>
       <input
         type="text"
@@ -61,6 +69,7 @@ export default function UserGlobalData(props) {
         placeholder={userCurrentDetails.email}
         onChange={handleChange}
       ></input>
+      <br/>
       <button
         onMouseOver={() => setDisplayOtherData(true)}
         onClick={() => setDisplayOtherData(false)}

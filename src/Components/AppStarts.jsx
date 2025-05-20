@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import UserGlobalData from "./UserGlobalData";
 import { getAllUsers, deleteUser } from "../Utils/usersUtils";
 
-export default function AppStarts() {
+export default function AppStarts(props) {
   const [users, setUsers] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [deletedUsers, setDeletedUsers] = useState([]);
@@ -67,6 +67,10 @@ export default function AppStarts() {
     console.log(filteredAfterDelete);
   };
 
+  const handleUserTodos=(userId)=>{
+     props.showUserTodos(userId);
+  }
+
   return (
     <div>
       <label>Search</label>
@@ -81,6 +85,7 @@ export default function AppStarts() {
           user={user}
           handleDelete={handleDelete}
           handleUpdateFilteredUsers={handleUpdateFilteredUsers}
+          handleUserTodos={handleUserTodos}
         />
       ))}
     </div>

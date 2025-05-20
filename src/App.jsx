@@ -1,10 +1,10 @@
 import { useState } from "react";
-import AppStarts from "./Components/AppStarts";
+import StageComponent from "./Components/StageComponent";
 
 function App() {
   return (
     <div>
-      <AppStarts/>
+      <StageComponent/>
     </div>
   );
 }

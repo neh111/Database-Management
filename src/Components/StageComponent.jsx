@@ -8,7 +8,7 @@ export default function StageComponent() {
     const [userId,setUserId]=useState();
     const showUserTodos=(id)=>{
        console.log(`user id: ${id}`)
-       setUserData(true)
+       setUserData(!userData)
        setUserId(id)
     }
   return (

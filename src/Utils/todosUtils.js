@@ -20,4 +20,9 @@ const updateCompletedTodo= async (userId,todoId)=>{
     return resp.data;
 };
 
-export { getUserUncompletedTodos , getAllUserTodos, updateCompletedTodo};
+const addNewTodo=async(newTodo)=>{
+  const resp=await axios.post(todosUrl,newTodo);
+  return resp.data;
+}
+
+export { getUserUncompletedTodos , getAllUserTodos, updateCompletedTodo, addNewTodo};

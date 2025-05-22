@@ -7,5 +7,9 @@ const getAllUserPosts = async (userId) => {
     return resp.data;
 };
 
+const addNewPost=async(newPost)=>{
+    const resp=await axios.post(postsUrl,newPost);
+    return resp.data;
+  }
 
-export {getAllUserPosts};
+export {getAllUserPosts,addNewPost};

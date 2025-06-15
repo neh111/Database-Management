@@ -11,9 +11,9 @@ export default function UserGlobalData(props) {
   const [userUpdatedData, setUserUpdatedData] = useState({
     name: props.user?.name || "",
     email: props.user?.email || "",
-    street: props.user?.address.street || "",
-    city: props.user?.address.city || "",
-    zipCode: props.user?.address.zipCode || "",
+    street: props.user?.address?.street || "",
+    city: props.user?.address?.city || "",
+    zipCode: props.user?.address?.zipCode || "",
   });
   const [userCurrentDetails, setUserCurrentDetails] = useState({
     name: props.user?.name || "",
@@ -40,7 +40,6 @@ export default function UserGlobalData(props) {
   const handleUpdate = async () => {
     const resp = await updateUserData(props.user?.id, userUpdatedData);
     console.log(resp);
-    //console.log(userUpdatedData);
     setUserCurrentDetails(userUpdatedData);
     props.handleUpdateFilteredUsers(props.user?.id,resp);
   };

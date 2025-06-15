@@ -7,14 +7,9 @@ export default function AppStarts(props) {
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [deletedUsers, setDeletedUsers] = useState([]);
   useEffect(() => {
-    const getUsersData = async () => {
-      const resp = await getAllUsers();
-      setUsers(resp);
-      setFilteredUsers(resp);
-      console.log(resp);
-    };
-    getUsersData();
-  }, []);
+    setUsers(props.users);
+    setFilteredUsers(props.users);
+  }, [props.users]);
 
   useEffect(() => {
     console.log("Filtered Users Updated:", filteredUsers);
@@ -57,6 +52,7 @@ export default function AppStarts(props) {
   };
 
   const handleDelete = async (userId) => {
+    console.log("in delete users, the user id is:",userId)
     const resp = await deleteUser(userId);
     setDeletedUsers((prevDeletedUsers) => [...prevDeletedUsers, userId]);
     const filteredAfterDelete = filteredUsers.filter(
@@ -71,6 +67,10 @@ export default function AppStarts(props) {
      props.showUserTodos(userId);
   }
 
+const handleAddUser=()=>{
+  props.setAddUser(true);
+}
+
   return (
     <div>
       <label>Search</label>
@@ -78,7 +78,7 @@ export default function AppStarts(props) {
         type="text"
         onChange={(event) => handleSearch(event.target.value)}
       ></input>
-      <button>Add</button>
+      <button onClick={handleAddUser}>Add</button>
       {filteredUsers.map((user) => (
         <UserGlobalData
           key={user.id}

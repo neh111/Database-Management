@@ -17,6 +17,7 @@ export default function AddNewPost(props) {
     };
     const resp = await addNewPost(newPost);
     console.log("new post resp is", resp)
+    props.setPosts(newPost);
   };
 
 

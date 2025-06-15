@@ -41,6 +41,11 @@ export default function UserTodos(props) {
     );
   };
 
+  const handleSetTodos=(newTodo)=>{
+    setUserTodos((prevTodos) => [...prevTodos, newTodo]);
+    setShowTodosList(true);
+  }
+
   return (
     <div>
       <div
@@ -67,7 +72,7 @@ export default function UserTodos(props) {
             />
           ))
         ) : (
-          <AddNewTodo userId={props.userId} cancelAdd={handleCanacelAdd}/>
+          <AddNewTodo userId={props.userId} cancelAdd={handleCanacelAdd} setTodos={handleSetTodos}/>
         )}
       </div>
     </div>

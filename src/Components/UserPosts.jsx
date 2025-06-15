@@ -29,6 +29,11 @@ export default function UserPosts(props) {
   const handleCanacelAdd=()=>{
     setShowPostsList(true);
   }
+
+  const handleSetPosts=(newPost)=>{
+    setPosts((prevPosts) => [...prevPosts, newPost]);
+    setShowPostsList(true);
+  }
   return (
     <div>
       <div
@@ -47,7 +52,7 @@ export default function UserPosts(props) {
             <Post key={post.id} title={post.title} body={post.body} />
           ))
         ) : (
-          <AddNewPost cancelAdd={handleCanacelAdd} userId={props.userId}/>
+          <AddNewPost cancelAdd={handleCanacelAdd} userId={props.userId} setPosts={handleSetPosts}/>
         )}
       </div>
     </div>

@@ -18,4 +18,10 @@ const deleteUser = async (userId) => {
   return resp.data;
 };
 
-export { getAllUsers, updateUserData, deleteUser };
+
+const addNewUser=async(newUser)=>{
+  const resp=await axios.post(usersUrl,newUser);
+  return resp.data;
+}
+
+export { getAllUsers, updateUserData, deleteUser,addNewUser };

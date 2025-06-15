@@ -13,6 +13,7 @@ export default function AddNewTodo(props) {
     };
     const resp = await addNewTodo(newTodo);
     console.log("new todo resp is", resp)
+    props.setTodos(newTodo);
   };
 
   const handleCancel=()=>{
